@@ -2,7 +2,7 @@
 // can be done bottom up too
 class Solution {
 private:
-    // mapping to the alphabets
+    // mapping to the alphabets 0 and 1 are unmapped
     vector<string>cmap = {"", "", "abc","def","ghi","jkl","mno","pqrs","tuv","wxyz"};
     vector<string> combos(string &digits, int idx) {
         vector<string> result;
