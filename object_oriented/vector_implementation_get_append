@@ -41,9 +41,11 @@ int main() {
   for (int i=0; i<1000; i++) {
     vec.append(i);
   }
+  
   for (int i=0; i<1000; i++) {
     cout<<vec.get_val(i)<<",";
   }
+  
   Dynamic_arr<string> vec2;
   vec2.append("hello");
   vec2.append("world");
