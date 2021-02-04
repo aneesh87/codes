@@ -1,0 +1,43 @@
+Given an array of integers nums, sort the array in increasing order based on the frequency of the values. If multiple values have the same frequency, sort them in decreasing order.
+
+Return the sorted array.
+
+class Solution {
+public:
+    static bool customCompare(const pair<int,int> &y, const pair<int,int> &z) {
+        // Decreasing by value if frequency is same
+        if (y.second == z.second) {
+            return y.first >= z.first;
+        }
+        return y.second < z.second; 
+    }
+    vector<int> frequencySort(vector<int>& nums) {
+        // Count the frequencies
+        unordered_map<int,int> a;
+        for (int i=0; i<nums.size(); i++) {
+            if (a.find(nums[i]) == a.end()) {
+                a[nums[i]] = 1;
+            } else {
+                a[nums[i]] +=1;
+            }
+        } 
+        // make vector of value,frequency pairs
+        vector<pair<int, int>> x;
+        auto itr = a.begin();
+        while (itr != a.end()) {
+            x.push_back(make_pair(itr->first, itr->second));
+            itr++;
+        } 
+        // sort the vector
+        sort(x.begin(), x.end(), customCompare);
+        int j = 0;
+        for (int i=0; i<nums.size();i++) {
+            nums[i] = x[j].first;
+            x[j].second--;
+            if (x[j].second == 0) {
+                j++;
+            }
+        }
+        return nums;
+    }
+};
