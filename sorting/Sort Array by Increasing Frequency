@@ -41,3 +41,23 @@ public:
         return nums;
     }
 };
+    
+// Another solution using lambda expressions.
+
+class Solution {
+public:
+
+    vector<int> frequencySort(vector<int>& nums) {
+        unordered_map<int,int> freq;
+        for (auto n: nums) {
+            freq[n]++;
+        }
+        
+        // &, any local variable canbe used in the context.
+        sort (nums.begin(), nums.end(), [&](int a, int b) {
+            if (freq[a] == freq[b]) return a > b;
+            return freq[a] < freq[b];
+        });
+        return nums;
+    }
+};
