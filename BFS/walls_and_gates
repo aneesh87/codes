@@ -1,0 +1,51 @@
+
+286. Walls and Gates
+
+
+Share
+You are given an m x n grid rooms initialized with these three possible values.
+
+-1 A wall or an obstacle.
+0 A gate.
+INF Infinity means an empty room. We use the value 231 - 1 = 2147483647 to represent INF as you may assume that the distance to a gate is less than 2147483647.
+Fill each empty room with the distance to its nearest gate. If it is impossible to reach a gate, it should be filled with INF.
+
+Input: rooms = [[2147483647,-1,0,2147483647],[2147483647,2147483647,2147483647,-1],[2147483647,-1,2147483647,-1],[0,-1,2147483647,2147483647]]
+Output: [[3,-1,0,1],[2,2,1,-1],[1,-1,2,-1],[0,-1,3,4]]
+ 
+ 
+class Solution {
+public:
+    void wallsAndGates(vector<vector<int>>& rooms) {
+        queue<pair<int,int>> q;
+        int M = rooms.size();
+        if (M==0) {
+            return;
+        }
+        int N = rooms[0].size();
+        int empty = INT_MAX;
+        int dir[4][2]={{-1,0},{1,0},{0,1},{0,-1}};
+        for (int i=0; i<rooms.size(); i++) {
+            for (int j=0; j< rooms[i].size(); j++) {
+                if (rooms[i][j]== 0) {
+                    // we add all the gates to bfs queue. Every room visited would be through a path to its nearest gate.
+                    q.push(make_pair(i,j));
+                }
+            }
+        }
+        // Multiway BFS, once you visit a cell you need not visit it again, because you have already explored it through shortest path.
+        while(!q.empty()) {
+            pair t = q.front();
+            q.pop();
+            for (int i=0; i<4; i++) {
+                int x = t.first+dir[i][0];
+                int y = t.second+dir[i][1];
+                if (x <0 || x >=M || y<0 || y >=N || rooms[x][y] != INT_MAX) {
+                    continue;
+                }
+                rooms[x][y] = rooms[t.first][t.second]+1;
+                q.push(make_pair(x,y));
+            }
+        }  // O(m*n)
+    }
+};
