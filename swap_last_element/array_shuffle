@@ -1,3 +1,4 @@
+
 class Solution {
 private:
     vector<int> num_orig;
