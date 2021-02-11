@@ -1,0 +1,63 @@
+class Solution {
+private:
+    vector<int> num_orig;
+public:
+    
+    Solution(vector<int>& nums) {
+        num_orig = nums;
+    }
+    
+    /** Resets the array to its original configuration and return it. */
+    vector<int> reset() {
+        return num_orig;
+    }
+    
+    /** Returns a random shuffling of the array. */
+    vector<int> shuffle() {
+        vector <int> old_vec = num_orig;
+        vector <int> new_vec;
+        for (int i = old_vec.size();i>=1; i--) {
+            int idx = rand()%i;
+            // swap last elemet with selected element.
+            new_vec.push_back(old_vec[idx]);
+            old_vec[idx] = old_vec[i-1];
+        }
+        return new_vec;
+    }
+};
+
+In place:
+
+9 3 1 3 4 1 8 (
+rand() % 7 = 3
+9 3 1 8 4 1(3
+rand() % 6 = 2
+9 3 3 8 4 (1 1
+rand() % 5 = 4
+9 3 3 8 (4 1 1
+rand () % 4 = 0
+8 3 3 (9 4 1 1
+rand () % 3 = 1
+8 3 (3 9 4 1 1
+rand() % 2 = 1
+8 (3 3 9 4 1 1
+rand() % 1 = 0
+8 3 3 9 4 1 1
+
+No. of ways = n * n-1 * n-2 * n-3 ... * 1
+No. of permutations = n!
+Exact mapping.
+
+If every step we select a random element in whole arrayand not decrease modulo index and swap with current element.
+
+No. of ways = n^n
+No. of permutations = n!
+
+Mapping = n^n/n! - not divisible. Prime numbers in n! will not divide n^n
+
+/**
+ * Your Solution object will be instantiated and called as such:
+ * Solution* obj = new Solution(nums);
+ * vector<int> param_1 = obj->reset();
+ * vector<int> param_2 = obj->shuffle();
+ */
