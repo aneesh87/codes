@@ -1,0 +1,24 @@
+
+build runs.
+
+{true, true, true, false, false},              60
+{true, true, true, true, false},               80
+{true, true, true, false, false, false},       50 
+{true, false, false}                           33
+{true, true, true, false}                      75
+{true, false}                                  50
+
+hourly build data.
+false -> build broken,
+once build fixed new run starts
+green percentage true/total time, want it to be high
+find longest strictly decreasing build run.
+Here 80 > 50 > 33 len is 3.
+
+longest decreasing subarray -> two pointer solution O(Number of build runs * complexity to find green percentage)
+find green percentage we can use binary search to find right most true.
+
+O(N * log (build run length))
+
+
+
