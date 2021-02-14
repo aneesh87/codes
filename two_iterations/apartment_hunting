@@ -1,0 +1,59 @@
+Apartment Hunting:
+
+Given a list of blocks and set of faclilities each block has.
+
+ex: { {gym : true, school: false, store: false}, 
+      {gym: false, school: true, store: false},
+      {gym: true, school: false, store: false},
+      {gym: false, school: false, store: true}
+    }
+
+Return the block where for each of the reqs you have to walk the min distance to reach all facilities.
+Here block 3, with distance is 1 to reach all reqs.
+
+Approach:
+
+Time complexity : O(num_blocks * num_reqs)
+Space : O(nm_blocks * num_reqs)
+
+#include <vector>
+#include <unordered_map>
+
+using namespace std;
+
+int apartmentHunting(vector<unordered_map<string, bool>> blocks,
+                     vector<string> reqs) {
+	int result = -1, min_max_dist = INT_MAX;
+	int num_blocks = blocks.size(), num_reqs = reqs.size();
+	vector<vector<int>> min_dist(num_blocks, vector<int>(num_reqs,INT_MAX));
+	
+	for (int i=0; i<num_blocks; i++) {
+		for (int j=0; j<num_reqs; j++) {
+			if (blocks[i][reqs[j]] == true) {
+				min_dist[i][j] =0;
+			}
+			if (i > 0) {
+				if (min_dist[i-1][j] != INT_MAX) {
+					min_dist[i][j] = min(min_dist[i][j], min_dist[i-1][j] + 1);
+				}
+			}
+		}
+	}
+		
+	for (int i = num_blocks-1; i>=0; i--) {
+		int max_dist = 0;
+		for (int j = 0; j<num_reqs; j++) {
+			if (i + 1 < num_blocks && min_dist[i+1][j] != INT_MAX) {
+				min_dist[i][j] = min(min_dist[i][j], min_dist[i+1][j] +1);
+			}
+			if (max_dist < min_dist[i][j]) {
+					max_dist = min_dist[i][j];
+			}
+		}
+		if (max_dist < min_max_dist) {
+				min_max_dist = max_dist;
+				result = i;
+		}
+	} 
+	return result;
+}
