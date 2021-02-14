@@ -16,6 +16,12 @@ Approach:
 Time complexity : O(num_blocks * num_reqs)
 Space : O(nm_blocks * num_reqs)
 
+Improve: Do forward and back iteration for all the requirements by creating a function and calling for each of it. 
+Compute max for each block and find minimum of the blocks.
+
+
+---
+
 #include <vector>
 #include <unordered_map>
 
