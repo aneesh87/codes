@@ -1,0 +1,26 @@
+class Solution {
+public:
+    int lengthOfLIS(vector<int>& nums) {
+        int len = nums.size();
+        vector<int> lis(len, 1);
+        int res = 1;
+        for (int idx = len -2; idx>=0; idx--) {
+            for (int next_idx = idx+1; next_idx < len; next_idx++) {
+                if (nums[next_idx] > nums[idx]) {
+                    lis[idx] = max(lis[idx], lis[next_idx]  + 1);
+                }
+            }
+            if (lis[idx] > res) {
+                res = lis[idx];
+            }
+        }
+        return res;
+    }
+};
+
+/*
+ lis from ith index = max(1, lis from ith+1  + 1, list from ith+2  +1 , .... );
+                     = max(1, lis from any candidates + 1)
+ -> has optimal substructure and repeated subproblems -> optimal sol from optimal solution of       subproblems.
+ 
+ */
