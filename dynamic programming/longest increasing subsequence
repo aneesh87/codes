@@ -21,6 +21,5 @@ public:
 /*
  lis from ith index = max(1, lis from ith+1  + 1, list from ith+2  +1 , .... );
                      = max(1, lis from any candidates + 1)
- -> has optimal substructure and repeated subproblems -> optimal sol from optimal solution of       subproblems.
- 
+ -> has optimal substructure and repeated subproblems -> optimal sol from optimal solution of       subproblems. 
  */
