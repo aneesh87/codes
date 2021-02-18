@@ -3,7 +3,7 @@ Given an array of integers nums and an integer k, return the number of unique k-
 A k-diff pair is an integer pair (nums[i], nums[j]), where the following are true:
 
 0 <= i, j < nums.length
-i != j
+i != j                                                      <<<< cant use same element twice, easier to handle 0 seperately.
 |nums[i] - nums[j]| == k                                    <<<<<<<< k >= 0
 Notice that |val| denotes the absolute value of val.
 
@@ -25,7 +25,7 @@ Output: 1
 Explanation: There is one 0-diff pair in the array, (1, 1).
 Example 4:
 
-Input: nums = [1,2,4,4,3,3,0,9,2,3], k = 3             <<<< repeat element later
+Input: nums = [1,2,4,4,3,3,0,9,2,3], k = 3             <<<< repeat element later, for finding complements need unique elements to traverse.
 Output: 2
 Example 5:
 
