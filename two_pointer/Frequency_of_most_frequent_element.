@@ -1,0 +1,31 @@
+
+class Solution {
+public:
+    int maxFrequency(vector<int>& nums, int k) {
+        sort(nums.begin(), nums.end());
+        int maxfreq = 1, freq = 0;
+        // Initial window size is 0
+        int head = nums.size()-1, tail = nums.size()-1;
+        
+        while (tail > 0 && head >= 0) {
+            freq = tail-head;
+            // expand window till you can no longer include head element.
+            while (head >= 0) {
+                if (nums[tail] - nums[head] > k) {
+                    break;
+                }
+                k -= nums[tail] - nums[head];
+                freq++;
+                head--;
+            }
+            // fix k for next iteration
+            k += (nums[tail] - nums[tail-1])*(freq-1);
+            maxfreq = max(maxfreq, freq);
+            // remove last element from window
+            tail--;
+        }
+        return maxfreq;
+    }
+};
+
+// Time Complexity = O(nlogn) + O(N), Space O(1)
