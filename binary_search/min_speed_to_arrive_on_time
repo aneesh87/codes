@@ -1,0 +1,24 @@
+class Solution {
+private:
+    double calc_time(vector<int>&dist, double speed) {
+        double hour = 0.0;
+        for (int i=0; i<dist.size()-1; i++) {
+            hour += ceil(dist[i]/speed);
+        }
+        hour += dist[dist.size()-1]/speed;
+        return hour;
+    }
+public:
+    int minSpeedOnTime(vector<int>& dist, double hour) {
+        int min_speed = 1, max_speed = 10000000;
+        while (min_speed <= max_speed) {
+            int mid_speed = min_speed + (max_speed - min_speed)/2;
+            if (calc_time(dist, mid_speed) <= hour) {
+                max_speed = mid_speed-1;
+            } else {
+                min_speed = mid_speed+1;
+            }
+        }
+        return min_speed > 10000000 ? -1 : min_speed;
+    }
+};
