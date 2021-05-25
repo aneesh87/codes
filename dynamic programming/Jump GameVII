@@ -1,0 +1,23 @@
+
+class Solution {
+public:
+    bool canReach(string s, int minJump, int maxJump) {
+        vector<bool> cango(s.length(),false);
+        cango[0] = true;
+        int farthest = 0;
+        for (int i = 0; i<s.length()-1;i++) {
+            if (!cango[i]) {
+                continue;
+            }
+            // dont re-evaulate indices already evaluated from earlier vertice
+            int j = max(farthest, i+minJump);
+            for (;j<=i+maxJump && j < s.length(); j++) {
+                if (s.at(j) == '0') {
+                    cango[j] = true;
+                }
+                farthest = j;
+            }
+        }
+        return cango[s.length()-1];
+    }
+};
