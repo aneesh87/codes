@@ -35,6 +35,7 @@ Other way is bottom up order of buiding num paths in order: 0->1->2->3
 void dfs(vector<int>&visited, int u, vector<vector<int>>&edjlist, int dest) {
     if (u == dest) {
         visited[u] = 1;
+        return;
     } else {
         visited[u] = 0;
     }
