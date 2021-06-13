@@ -28,11 +28,8 @@ Solution:
 DFS and memoization.
 
 Once a vertex is done with all its direct children, we can set its value.
-The value can be reused by ancestors of vertex.
-
-Since its dag, you will never encounter a vertex which is your ancestor
-while doing the expansion. 
-
+The value can be reused by ancestors of vertex.Since its dag, you will 
+never encounter a vertex which is your ancestor during the expansion. 
 Other way is bottom up order of buiding num paths in order: 0->1->2->3
 
 void dfs(vector<int>&visited, int u, vector<vector<int>>&edjlist, int dest) {
