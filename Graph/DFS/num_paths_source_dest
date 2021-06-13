@@ -42,7 +42,7 @@ void dfs(vector<int>&visited, int u, vector<vector<int>>&edjlist, int dest) {
     for (int i=0; i<edjlist[u].size();i++) {
         int v = edjlist[u][i];
         if (visited[v] == -1) {
-            dfs(visited, v, edjlist, count);
+            dfs(visited, v, edjlist, dest);
         }
         visited[u]+=visited[v];
     }
