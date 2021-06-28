@@ -14,10 +14,9 @@ void clear_err (uint8_t reg) {
 }
 
 void test_for_error () {
-  time_t curtime = 0;
-  time_t clear_err_sec = 0;
-  bool err_occurred = false;
-  time_t time_since_err = 0;
+  time_t   curtime = 0;
+  bool     err_occurred = false;
+  time_t   time_of_err = 0;
   uint_8_t reg = 0x0;
   
   while (1) {
@@ -26,16 +25,15 @@ void test_for_error () {
     
     if (!err_occurred) {
         if (reg & ERROR_CHECK) {
-            error_occurred = true;
-            clear_err_sec = curtime + delay;
-            time_since_err = curtime;
+            err_occurred = true;
+            time_of_err = curtime;
          } else {
-            if (curtime - time_since_err >= RESET_SEC) {
+            if (curtime - time_of_err >= RESET_SEC) {
                 delay = 60;
             }
          }
     } else {
-        if (curtime >= clear_err_sec) {
+        if (curtime - time_of_err  >= delay) {
             clear_err(reg);
             err_occurred = false;
         }
