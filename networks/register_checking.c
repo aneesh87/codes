@@ -35,10 +35,10 @@ void test_for_error () {
             }
          }
     } else {
-         if (curtime >= clear_err_sec) {
-             clear_err(reg);
-             err_occurred = false;
-         }
+        if (curtime >= clear_err_sec) {
+            clear_err(reg);
+            err_occurred = false;
+        }
      }
   }
 }
