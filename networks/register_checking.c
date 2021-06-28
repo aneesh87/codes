@@ -41,7 +41,7 @@ void test_for_error () {
   }
 }
   
-  int main(int agrc, char **argv) {
-    test_for_err();
-    return 0;
-  }
+int main(int agrc, char **argv) {
+   test_for_err();
+   return 0;
+}
