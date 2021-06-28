@@ -25,7 +25,7 @@ void test_for_error () {
     curtime = get_timestamp();
     
     if (!err_occurred) {
-        if (reg & CHECK_ERR) {
+        if (reg & ERROR_CHECK) {
             error_occurred = true;
             clear_err_sec = curtime + delay;
             time_since_err = curtime;
