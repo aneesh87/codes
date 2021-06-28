@@ -41,6 +41,7 @@ void test_for_error () {
          }
      }
   }
+}
   
   int main(int agrc, char **argv) {
     test_for_err();
