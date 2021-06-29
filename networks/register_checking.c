@@ -1,3 +1,13 @@
+/*
+- 8 bit register check for errors 
+- in case of error lsb set
+- to clear error write to msb with delay
+- initial delay is 60 sec.
+- delay is multiplied by 2 for every error.
+- delay increases upto 60 min
+- if no error due to 24 hrs reset delay to 60 sec
+*/
+
 #include <stdio.h>
 
 #define ERROR_CHECK 0x1
