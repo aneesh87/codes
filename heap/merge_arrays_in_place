@@ -1,0 +1,27 @@
+A = {1,5,9,10,15,20}
+B = {2,3,8,13}
+
+A = {1,2,3,5,8,9}
+B = {10,13,15,20}
+
+O(1) space
+
+Solution 1 - 2 ptr - if A[i] < B[i] i++
+else swap(A[i],B[j]) insert first element correctly into B 
+by swapping with greater element.
+
+complexity O(m*n)
+
+Solution 2:
+
+treat the smaller array as min heap.
+if array element is smaller i++;
+else swap(A[i],B[i])
+now heapify B by moving top element into correct place.
+
+In end sort the minheap.
+
+complexity: n*logm + mlogm = (n+m)log m = choosing smaller of m,n = (n+m) log (min(m,n))
+
+
+
