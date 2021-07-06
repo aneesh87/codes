@@ -1,0 +1,26 @@
+int count_bits(unsigned val) {
+    int set_bits = 0;
+    while (val) {
+        if (val & 0x1) {
+            set_bits++;
+        }
+        val = val>>1;
+    }
+    return set_bits;
+}
+
+int count_bits(int val) {
+    int set_bits = 0;
+    unsigned int mask = 0x1;
+    for (int i=0; i<sizeof(int)*8; i++) {
+        if (val & mask) set_bits++;
+        mask= mask<<1;
+    }
+    return set_bits;
+}
+int main() {
+    unsigned int x = 10;
+    int y = -10;
+    cout<<count_bits(4)<<" "<<count_bits(100)<<" "<<count_bits(x)<<" "<<count_bits(y)<<"\n";
+    return 0;
+}
