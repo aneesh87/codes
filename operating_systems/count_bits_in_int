@@ -1,3 +1,4 @@
+
 int count_bits(unsigned val) {
     int set_bits = 0;
     while (val) {
