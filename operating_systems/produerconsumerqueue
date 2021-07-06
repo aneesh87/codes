@@ -1,0 +1,59 @@
+class BoundedBlockingQueue {
+
+private:
+    int capacity = 0;
+    int i=0;
+    mutex m;
+    condition_variable queue_not_full;
+    condition_variable queue_not_empty;
+    queue<int>q;
+public:
+    BoundedBlockingQueue(int capacity) {
+        this->capacity = capacity;
+    }
+    
+    void enqueue(string name) {
+        while (1) {
+            // wrapper on mutex lock;
+            unique_lock<mutex> lk(m);
+            while (q.size() == capacity) {
+                queue_not_full.wait(lk);
+            }
+            cout<<name<<" Produced "<<i<<endl;
+            q.push(i);
+            i++;
+            lk.unlock();
+            queue_not_empty.notify_all();
+        }
+    }
+    
+    void dequeue(string name) {
+        while (1) {
+            unique_lock<mutex> lk(m);
+            while (q.size() == 0) {
+                queue_not_empty.wait(lk);
+            }
+            int ele = q.front();
+            cout<<name<<" Consumed "<<ele<<endl;
+            q.pop();
+            lk.unlock();
+            queue_not_full.notify_all();
+        }
+    }
+    
+    int size() {
+        return q.size();
+    }
+};
+int main() {
+    std::cout << "Hello World!\n";
+    BoundedBlockingQueue q(100);
+    thread t1(&BoundedBlockingQueue::enqueue, &q, "thread_1");
+    thread t2(&BoundedBlockingQueue::enqueue, &q, "thread_2");
+    thread t3(&BoundedBlockingQueue::dequeue, &q, "thread_3");
+    thread t4(&BoundedBlockingQueue::dequeue, &q, "thread_4");
+    t1.join();
+    t2.join();
+    t3.join();
+    t4.join();
+}
