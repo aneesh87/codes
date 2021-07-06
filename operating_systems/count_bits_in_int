@@ -19,6 +19,7 @@ int count_bits(int val) {
     }
     return set_bits;
 }
+
 int main() {
     unsigned int x = 10;
     int y = -10;
