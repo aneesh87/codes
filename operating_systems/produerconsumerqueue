@@ -57,3 +57,66 @@ int main() {
     t3.join();
     t4.join();
 }
+
+
+
+class BoundedBlockingQueue {
+private:
+    int capacity = 0;
+    int cursize;
+    int *data;
+    int front;
+    int rear;
+    mutex m;
+    condition_variable queue_not_full;
+    condition_variable queue_not_empty;
+    
+public:
+    BoundedBlockingQueue(int capacity) {
+        this->capacity = capacity;
+        data = new int[capacity];
+        cursize = 0;
+        front = -1;
+        rear = -1;
+    }
+    ~BoundedBlockingQueue() {
+        delete []data;
+    }
+    void enqueue(int element) {
+        // wrapper on mutex lock;
+        unique_lock<mutex> lk(m);
+        while (cursize == capacity) {
+            queue_not_full.wait(lk);
+        }
+        cursize++;
+        if (front == -1) {
+            front = 0;
+        }
+        rear = (rear+1)%capacity;
+        data[rear] = element;
+        
+        lk.unlock();
+        queue_not_empty.notify_all();
+    }
+    
+    int dequeue() {
+        unique_lock<mutex> lk(m);
+        while (cursize == 0) {
+            queue_not_empty.wait(lk);
+        }
+        cursize--;
+        int val = data[front];
+        front = (front+1)%capacity;
+        if (cursize == 0) {
+            front = -1;
+            rear = -1;
+        }
+        lk.unlock();
+        queue_not_full.notify_all();
+        return val;
+    }
+    
+    int size() {
+        return cursize;
+    }
+};
