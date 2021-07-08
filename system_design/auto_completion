@@ -1,0 +1,81 @@
+// Compiled with: g++ -Wall -std=c++14 -pthread
+
+#include <iostream>
+
+using namespace std;
+
+int main(){
+    cout << "Hello, World!" << endl;
+    return 0;
+}
+
+Auto complete feature
+   
+1 billion users & 1 billion video
+    100k queries per sec - in memory possible - db 600k reads/sec 100k writes/sec
+    
+    - 100 byte title * 1 billion = 100 GB 
+    - history - across all the users = 100 GB
+    
+    - 100 gb memory for trie - 100 byte = 
+    
+    abc(titel 1)-fafaf (title 2)
+    
+    leaf node < 1 billion
+    internal node < 1 billion
+    ~ < 2 billion
+    
+    a-z = 26,0-9 = 10 = 36
+        
+class Trie_Node {
+  Trie_node *next[36];
+};
+
+memory for one node = 36*8bytes + 1 byte = 288  + 1  ~ 300 bytes
+    
+    300 * 2 bill = 600 GB (for 2 billion nodes)
+    
+    memory in each machine = 100 GB 
+    
+    36 entry nodes = 6 machines = 6 entry nodes / machine [a-f] ... []
+    
+    - not uniform a will be more (but history is dynamic)
+    
+    - load balance on heavier / hotspot nodes - dynamically auto scale if load is peak - more memory
+    
+    - every edge has hit counter - some edges will be hotspoting - autoscale for that prefix (every prefix has counter)
+    
+The trie has to be persistent on disk every 10 min - history (not need to be exact)
+    
+    if crash rebuild in memory from disk
+    
+    - Just serialize the trie into a file/files on disk.
+    
+ 
+    Return top 10 results - youtube titles.
+    
+    
+    - dfs from matched prefix - sort the autocompletes based on hit counter
+    
+    node
+    /\ \
+    c1 c2  c3
+    
+    ask each child for their top K results - then merge together - do recursively in postorder maybe 3-4 levels.
+    If  saved/cached already then return
+    
+    - title id (ptr)  = address of first byte -> read till NULL
+    
+    
+    - 40 gb mem
+    - everything in trie - search phrase - not titles
+    - search phrase recommend or autocomplete based on history and top ten titles we can insert into tries 
+    or frequently search phrases
+    - also remove stock words - is, of etc
+    - term count indicating popularity - same prefix search - increase ranking
+    - to get titles - inverted/document index
+    - seperate geography - different datacenter - no need to sync as search popularity is local to their datacenter.
+    - even in same datacenter - same say satrting with a diff machines - need not sync here also - because not a hard rule
+    - hit counter can also be locally - sync of counter not required.
+    - merge stats at end for average - when persist to disk
+    - Fault tolerane 3 copies of disk data.
